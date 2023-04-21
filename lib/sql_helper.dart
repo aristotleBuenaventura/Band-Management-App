@@ -5,17 +5,15 @@ class SQLHelper {
   static Future<void> createTables(sql.Database database) async {
     await database.execute("""CREATE TABLE items(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    user_name TEXT,
-    restaurant_name TEXT,
-    rating TEXT,
-    review TEXT,
-    image TEXT,
+    band_name TEXT,
+    genre_name TEXT,
+
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-    )""");
+  )""");
   }
 
   static Future<sql.Database> db() async {
-    return sql.openDatabase('restaurant.db', version: 1,
+    return sql.openDatabase('band.db', version: 1,
         onCreate: (sql.Database database, int version) async {
       if (kDebugMode) {
         print('...creating a table...');
@@ -24,16 +22,12 @@ class SQLHelper {
     });
   }
 
-  static Future<int> createItem(String userName, String restaurantName,
-      String rating, String? review, String image) async {
+  static Future<int> createItem(String bandName, String genreName) async {
     final db = await SQLHelper.db();
 
     final data = {
-      'user_name': userName,
-      'restaurant_name': restaurantName,
-      'rating': rating,
-      'review': review,
-      'image': image,
+      'band_name': bandName,
+      'genre_name': genreName,
     };
     final id = await db.insert('items', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
@@ -50,16 +44,12 @@ class SQLHelper {
     return db.query('items', where: 'id= ?', whereArgs: [id], limit: 1);
   }
 
-  static Future<int> updateItem(int id, String userName, String restaurantName,
-      String rating, String? review, String image) async {
+  static Future<int> updateItem(int id, String bandName, String genreName,) async {
     final db = await SQLHelper.db();
 
     final data = {
-      'user_name': userName,
-      'restaurant_name': restaurantName,
-      'rating': rating,
-      'review': review,
-      'image': image,
+      'band_name': bandName,
+      'genre_name': genreName,
       'createdAt': DateTime.now().toString(),
     };
 
