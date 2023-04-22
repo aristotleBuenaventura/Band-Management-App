@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   margin: const EdgeInsets.all(15),
                   child: ElevatedButton(
                     style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                        ElevatedButton.styleFrom(foregroundColor: Colors.black, backgroundColor: Colors.white,),
                     child: ListTile(
                       subtitle: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -184,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => band_details(id: _bands[index]['id'],)));
+                              builder: (context) => band_details(id: _bands[0]['id'],)));
                     },
                   )),
             ),
@@ -199,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               style: ElevatedButton.styleFrom(
                 elevation: 4,
-                backgroundColor: Colors.white,
+                foregroundColor: Colors.black, backgroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -212,7 +212,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Text(
                       "Add a Band",
                       style: TextStyle(
-                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

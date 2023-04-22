@@ -94,7 +94,7 @@ class _band_memberState extends State<band_member> {
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 4,
-                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black, backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -107,7 +107,6 @@ class _band_memberState extends State<band_member> {
                         child: Text(
                           "Save",
                           style: TextStyle(
-                            color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

@@ -82,23 +82,18 @@ class _band_detailsState extends State<band_details> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
             child: Container(
                 width:
                     double.infinity, // Set the desired width of the container
                 height: 50, // Set the desired height of the container
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(
-                      20), // You can adjust the radius to change the pill shape
+                   // You can adjust the radius to change the pill shape
                 ),
                 child: Container(
                   width: 200,
                   height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
                   child: const Center(
                     // Wrap the Text widget in a Center widget
                     child: Text(
@@ -119,7 +114,7 @@ class _band_detailsState extends State<band_details> {
                         builder: (context) => band_member()));
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black, backgroundColor: Colors.white,
+                foregroundColor: Colors.white, backgroundColor: Colors.black, // Set text color to white
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -137,23 +132,18 @@ class _band_detailsState extends State<band_details> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
             child: Container(
                 width:
                 double.infinity, // Set the desired width of the container
                 height: 50, // Set the desired height of the container
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(
-                      20), // You can adjust the radius to change the pill shape
+                  // You can adjust the radius to change the pill shape
                 ),
                 child: Container(
                   width: 200,
                   height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
                   child: const Center(
                     // Wrap the Text widget in a Center widget
                     child: Text(
@@ -174,7 +164,7 @@ class _band_detailsState extends State<band_details> {
                         builder: (context) => band_song()));
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black, backgroundColor: Colors.white,
+                foregroundColor: Colors.white, backgroundColor: Colors.black, // Set text color to white
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -191,7 +181,38 @@ class _band_detailsState extends State<band_details> {
               ),
             ),
           ),
-
+          const Spacer(),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // _showForm(null);
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => band_entry()));
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 4,
+                foregroundColor: Colors.black, backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const SizedBox(
+                width: 200, // Set the desired width here
+                child: SizedBox(
+                  height: 50,
+                  child: Center(
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
 
         ],
       ),

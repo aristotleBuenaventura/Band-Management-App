@@ -151,7 +151,7 @@ class _band_entryState extends State<band_entry> {
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 4,
-                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black, backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -164,7 +164,6 @@ class _band_entryState extends State<band_entry> {
                         child: Text(
                           "Save",
                           style: TextStyle(
-                            color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
