@@ -75,26 +75,12 @@ class _band_entryState extends State<band_entry> {
                   },
                   hint: const Text('Genre'),
                   items: <String>[
-                    "Pop",
+                    "K-pop",
                     "Rock",
-                    "Hip-Hop",
-                    "Electronic",
+                    "Metal",
+                    "OPM",
                     "Jazz",
                     "R&B",
-                    "Country",
-                    "Reggae",
-                    "Classical",
-                    "Funk",
-                    "Soul",
-                    "Blues",
-                    "Heavy metal",
-                    "Folk",
-                    "Punk",
-                    "World",
-                    "Latin",
-                    "Gospel",
-                    "Alternative",
-                    "Indie",
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -120,11 +106,34 @@ class _band_entryState extends State<band_entry> {
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
-                                // Close the dialog and save the item
-                                Navigator.of(context).pop();
-                                _addItem();
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => MyApp()));
+                                // Close the dialog and save the item if genre and bandName are not null
+                                if (_genre != null && _bandName != null) {
+                                  Navigator.of(context).pop();
+                                  _addItem();
+                                  Navigator.of(context).pop();
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => MyApp()));
+                                } else {
+                                  // Show an alert message if genre or bandName is null
+                                  Navigator.of(context).pop();
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Error"),
+                                        content: Text("Genre and band name cannot be empty."),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text("OK"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: Text("Yes"),
                             ),

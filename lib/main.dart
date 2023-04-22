@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:restaurant_review/band_details.dart';
 import 'package:restaurant_review/band_page.dart';
 import 'package:restaurant_review/sql_helper.dart';
 import 'band_entry.dart';
@@ -180,17 +181,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => Review_Page(
-                      //             reviewName: _bands[index]
-                      //                 ['restaurant_name'],
-                      //             reviewRating: _bands[index]['rating'],
-                      //             reviewReviewerName: _bands[index]
-                      //                 ['user_name'],
-                      //             reviewReview: _bands[index]['review'],
-                      //             reviewImage: _bands[index]['image'])));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => band_details(id: _bands[index]['id'],)));
                     },
                   )),
             ),

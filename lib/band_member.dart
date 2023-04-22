@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
-class band_member extends StatelessWidget {
-  const band_member({Key? key}) : super(key: key);
+class band_member extends StatefulWidget {
+  @override
+  _band_memberState createState() => _band_memberState();
+}
+
+class _band_memberState extends State<band_member> {
 
   @override
   Widget build(BuildContext context) {

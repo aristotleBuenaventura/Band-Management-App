@@ -7,7 +7,6 @@ class SQLHelper {
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     band_name TEXT,
     genre_name TEXT,
-
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   )""");
   }

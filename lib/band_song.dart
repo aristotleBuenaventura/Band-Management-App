@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
-class band_song extends StatelessWidget {
-  const band_song({Key? key}) : super(key: key);
+class band_song extends StatefulWidget {
+  @override
+  _band_songState createState() => _band_songState();
+}
+
+class _band_songState extends State<band_song> {
 
   @override
   Widget build(BuildContext context) {
