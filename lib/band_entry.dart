@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_review/sql_helper.dart';
+import 'band_member.dart';
 
 import 'main.dart';
 
@@ -91,6 +92,39 @@ class _band_entryState extends State<band_entry> {
               ),
             ),
           ),
+              SizedBox(
+                height: 16.0,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => band_member()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  primary:  Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12.0,
+                    horizontal: 24.0,
+                  ),
+                  child: Text(
+                    'Add Band Members',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
               const Spacer(),
               Padding(
                 padding: EdgeInsets.all(16.0),
