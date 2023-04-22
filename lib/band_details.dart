@@ -30,14 +30,19 @@ class _band_detailsState extends State<band_details> {
 
   String image(String genre) {
     String genreImage = '';
-    if (genre == 'K-pop') {
-      genreImage = 'assets/Banner.png';
+    if (genre == 'K pop') {
+      genreImage = 'assets/k-pop.png';
     } else if (genre == 'Rock') {
-      genreImage = 'assets/food.jpg';
+      genreImage = 'assets/Rock.png';
     } else if (genre == 'Metal') {
+      genreImage = 'assets/Metal.png';
     } else if (genre == 'OPM') {
+      genreImage = 'assets/OPM.png';
     } else if (genre == 'Jazz') {
-    } else if (genre == 'R&B') {}
+      genreImage = 'assets/Jazz.png';
+    } else if (genre == 'R&B') {
+      genreImage = 'assets/R&B.png';
+    }
     return genreImage;
   }
 

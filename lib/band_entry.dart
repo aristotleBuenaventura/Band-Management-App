@@ -75,7 +75,7 @@ class _band_entryState extends State<band_entry> {
                   },
                   hint: const Text('Genre'),
                   items: <String>[
-                    "K-pop",
+                    "K pop",
                     "Rock",
                     "Metal",
                     "OPM",
