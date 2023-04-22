@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_review/sql_helper.dart';
+
+import 'main.dart';
 
 class band_song extends StatefulWidget {
+  final int id;
+  const band_song({Key? key, required this.id}) : super(key: key);
+
   @override
   _band_songState createState() => _band_songState();
 }
 
 class _band_songState extends State<band_song> {
+  String? _songName;
+  String? _releaseYear;
+
+  Future<void> _updateItemSong(int id) async {
+    await SQLHelper.updateItemSong(
+        id, _songName!, _releaseYear!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +26,7 @@ class _band_songState extends State<band_song> {
       backgroundColor: Colors.white12,
       appBar: AppBar(
         title: const Center(
-          child: Text("Band Song Entry"),
+          child: Text("Band Member Entry"),
         ),
         backgroundColor: Colors.black,
       ),
@@ -27,12 +40,17 @@ class _band_songState extends State<band_song> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Enter the Song Name',
+                    decoration: const InputDecoration(
+                      labelText: 'Enter the Band Member name',
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        _songName = value;
+                      });
+                    },
                   ),
                 ),
               ),
@@ -44,12 +62,17 @@ class _band_songState extends State<band_song> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Enter the Song\'s Release Year',
+                    decoration: const InputDecoration(
+                      labelText: 'Enter the Band Member name',
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        _releaseYear = value;
+                      });
+                    },
                   ),
                 ),
               ),
@@ -58,12 +81,62 @@ class _band_songState extends State<band_song> {
                 padding: EdgeInsets.all(16.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // _showForm(null);
-
+                    // Show a confirmation dialog before saving
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Confirmation"),
+                          content: Text("Are you sure you want to save?"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                // Close the dialog and save the item if genre and bandName are not null
+                                if (_songName != null && _releaseYear != null) {
+                                  Navigator.of(context).pop();
+                                  _updateItemSong(widget.id);
+                                  Navigator.of(context).pop();
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => MyApp()));
+                                } else {
+                                  // Show an alert message if genre or bandName is null
+                                  Navigator.of(context).pop();
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Error"),
+                                        content: Text("Genre and band name cannot be empty."),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text("OK"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                              child: Text("Yes"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // Close the dialog without saving
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("No"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 4,
-                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black, backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -76,7 +149,6 @@ class _band_songState extends State<band_song> {
                         child: Text(
                           "Save",
                           style: TextStyle(
-                            color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -92,4 +164,5 @@ class _band_songState extends State<band_song> {
       ),
     );
   }
+
 }

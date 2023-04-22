@@ -111,7 +111,7 @@ class _band_detailsState extends State<band_details> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => band_member()));
+                        builder: (context) => band_member(id: _bands[0]['id'])));
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white, backgroundColor: Colors.black, // Set text color to white
@@ -161,7 +161,7 @@ class _band_detailsState extends State<band_details> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => band_song()));
+                        builder: (context) => band_song(id: _bands[0]['id'])));
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white, backgroundColor: Colors.black, // Set text color to white

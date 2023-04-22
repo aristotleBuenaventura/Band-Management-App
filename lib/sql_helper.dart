@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
+import 'package:sqflite/sqflite.dart';
 
 class SQLHelper {
   static Future<void> createTables(sql.Database database) async {
@@ -7,6 +8,10 @@ class SQLHelper {
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     band_name TEXT,
     genre_name TEXT,
+    member_name TEXT,
+    instrument_name TEXT,
+    song_name TEXT,
+    release_year TEXT,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   )""");
   }
@@ -54,6 +59,30 @@ class SQLHelper {
 
     final result =
         await db.update('items', data, where: 'id = ?', whereArgs: [id]);
+    return result;
+  }
+
+  static Future<int> updateItemMember(int id, String member, String instrument) async {
+    final db = await SQLHelper.db();
+
+    final data = {
+      'member_name': member,
+      'instrument_name': instrument,
+    };
+
+    final result = await db.update('items', data, where: 'id = ?', whereArgs: [id]);
+    return result;
+  }
+
+  static Future<int> updateItemSong(int id, String song, String year) async {
+    final db = await SQLHelper.db();
+
+    final data = {
+      'song_name': song,
+      'release_year': year,
+    };
+
+    final result = await db.update('items', data, where: 'id = ?', whereArgs: [id]);
     return result;
   }
 
