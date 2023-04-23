@@ -97,10 +97,7 @@ class _band_entryState extends State<band_entry> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => band_member()),
-                  );
+
                 },
                 style: ElevatedButton.styleFrom(
                   primary:  Colors.white,

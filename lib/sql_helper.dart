@@ -5,7 +5,7 @@ class SQLHelper {
   static Future<void> createTables(sql.Database database) async {
     await database.execute("""CREATE TABLE items(
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    band_name TEXT,
+    band_name TEXT, 
     genre_name TEXT,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   );""");

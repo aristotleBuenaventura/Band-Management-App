@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restaurant_review/band_member.dart';
 import 'package:restaurant_review/band_song.dart';
 import 'package:restaurant_review/sql_helper.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class band_details extends StatefulWidget {
   final int id;
@@ -21,10 +22,12 @@ class _band_detailsState extends State<band_details> {
     final members = await SQLHelper.getItemMembers(widget.id);
     final songs = await SQLHelper.getItemSongs(widget.id);
 
+
     setState(() {
       _bands = data;
       _members = members;
       _songs = songs;
+
       print(_bands);
       print(_members);
       print(_songs);
@@ -54,6 +57,27 @@ class _band_detailsState extends State<band_details> {
       genreImage = 'assets/R&B.png';
     }
     return genreImage;
+  }
+
+
+  IconData instrumentIcon(String? instrument) {
+    String instrumentImage = '';
+    if (instrument == null) {
+      print('Received null value for instrument');
+      return Icons.help_outline;
+    } else if (instrument == 'Guitar') {
+      return MdiIcons.guitarElectric;
+    } else if (instrument == 'Bass') {
+      return MdiIcons.microphone;
+    } else if (instrument == 'Drums') {
+      return MdiIcons.microphone;
+    } else if (instrument == 'Keyboard') {
+      return MdiIcons.microphone;
+    } else if (instrument == 'Vocals') {
+      return MdiIcons.microphone;
+    } else {
+      return MdiIcons.helpCircleOutline;
+    }
   }
 
   @override
@@ -118,6 +142,7 @@ class _band_detailsState extends State<band_details> {
             height: 100,
             child: Expanded(
             child: ListView.builder(
+
               itemCount: _members.length,
               itemBuilder: (context, index) => Card(
                   color: Colors.white,
@@ -133,15 +158,21 @@ class _band_detailsState extends State<band_details> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                Icon(
+                                  instrumentIcon(_members[index]['Instrument']),
+                                  size: 20,
+                                ),
+                                SizedBox(width: 10),
                                 Text(
                                   _members[index]['member_name'],
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
-                                      color: Colors.black),
+                                      color: Colors.black
+                                  ),
                                 ),
                               ],
                             ),
