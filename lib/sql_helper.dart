@@ -8,12 +8,20 @@ class SQLHelper {
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     band_name TEXT,
     genre_name TEXT,
-    member_name TEXT,
-    instrument_name TEXT,
     song_name TEXT,
     release_year TEXT,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-  )""");
+  );""");
+  }
+
+  static Future<void> createTablesMembers(sql.Database database) async {
+    await database.execute("""CREATE TABLE members(
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    item_id INTEGER NOT NULL,
+    member_name TEXT,
+    instrument_name TEXT,
+    FOREIGN KEY(item_id) REFERENCES items(id)
+  );""");
   }
 
   static Future<sql.Database> db() async {
@@ -24,6 +32,16 @@ class SQLHelper {
       }
       await createTables(database);
     });
+  }
+
+  static Future<sql.Database> dbMembers() async {
+    return sql.openDatabase('bandMembers.db', version: 1,
+        onCreate: (sql.Database database, int version) async {
+          if (kDebugMode) {
+            print('...creating a table...');
+          }
+          await createTablesMembers(database);
+        });
   }
 
   static Future<int> createItem(String bandName, String genreName) async {
@@ -38,6 +56,20 @@ class SQLHelper {
     return id;
   }
 
+  static Future<int> createItemMember(int id, String member, String instrument) async {
+    final db = await SQLHelper.dbMembers();
+
+    final data = {
+      'item_id': id,
+      'member_name': member,
+      'instrument_name': instrument,
+    };
+
+    final result = db.insert('members', data,
+        conflictAlgorithm: sql.ConflictAlgorithm.replace);
+    return result;
+  }
+
   static Future<List<Map<String, dynamic>>> getItems() async {
     final db = await SQLHelper.db();
     return db.query('items', orderBy: 'id');
@@ -46,6 +78,11 @@ class SQLHelper {
   static Future<List<Map<String, dynamic>>> getItem(int id) async {
     final db = await SQLHelper.db();
     return db.query('items', where: 'id= ?', whereArgs: [id], limit: 1);
+  }
+
+  static Future<List<Map<String, dynamic>>> getItemMembers(int id) async {
+    final db = await SQLHelper.dbMembers();
+    return db.query('members', where: 'item_id= ?', whereArgs: [id], limit: null);
   }
 
   static Future<int> updateItem(int id, String bandName, String genreName,) async {
@@ -62,17 +99,7 @@ class SQLHelper {
     return result;
   }
 
-  static Future<int> updateItemMember(int id, String member, String instrument) async {
-    final db = await SQLHelper.db();
 
-    final data = {
-      'member_name': member,
-      'instrument_name': instrument,
-    };
-
-    final result = await db.update('items', data, where: 'id = ?', whereArgs: [id]);
-    return result;
-  }
 
   static Future<int> updateItemSong(int id, String song, String year) async {
     final db = await SQLHelper.db();

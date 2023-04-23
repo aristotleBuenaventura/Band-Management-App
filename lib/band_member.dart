@@ -16,7 +16,7 @@ class _band_memberState extends State<band_member> {
   String? _instrumentName;
 
   Future<void> _updateItemMember(int id) async {
-    await SQLHelper.updateItemMember(
+    await SQLHelper.createItemMember(
         id, _memberName!, _instrumentName!);
   }
 

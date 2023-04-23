@@ -13,12 +13,19 @@ class band_details extends StatefulWidget {
 
 class _band_detailsState extends State<band_details> {
   List<Map<String, dynamic>> _bands = [];
+  List<Map<String, dynamic>> _members = [];
 
   void _refreshBands() async {
     final data = await SQLHelper.getItem(widget.id);
+    final members = await SQLHelper.getItemMembers(widget.id);
+
     setState(() {
       _bands = data;
+      _members = members;
       print(_bands);
+      print(_members);
+      print(_members.length);
+
     });
   }
 
@@ -104,6 +111,66 @@ class _band_detailsState extends State<band_details> {
                 )
             ),
           ),
+          Container(
+            height: 100,
+            child: Expanded(
+            child: ListView.builder(
+              itemCount: _members.length,
+              itemBuilder: (context, index) => Card(
+                  color: Colors.white,
+                  margin: const EdgeInsets.all(15),
+                  child: ElevatedButton(
+                    style:
+                    ElevatedButton.styleFrom(foregroundColor: Colors.black, backgroundColor: Colors.white,),
+                    child: ListTile(
+                      subtitle: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _members[index]['member_name'],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              child: Column(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.black),
+                                    ),
+                                    child: const Text(
+                                        'Delete'), // the text displayed on the button
+                                  ),
+                                ],
+                              )),
+                        ],
+                      ),
+                    ),
+                    onPressed: () {
+                    },
+                  )),
+            ),
+          ),),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: ElevatedButton(
