@@ -184,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => band_details(id: _bands[0]['id'],)));
+                              builder: (context) => band_details(id: _bands[index]['id'],)));
                     },
                   )),
             ),
