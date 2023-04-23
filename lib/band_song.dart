@@ -16,7 +16,7 @@ class _band_songState extends State<band_song> {
   String? _releaseYear;
 
   Future<void> _updateItemSong(int id) async {
-    await SQLHelper.updateItemSong(
+    await SQLHelper.createItemSong(
         id, _songName!, _releaseYear!);
   }
 
