@@ -57,25 +57,22 @@ class _band_detailsState extends State<band_details> {
     return genreImage;
   }
 
-  IconData instrumentIcon(String? instrument) {
+  String imageIcon(String instrument) {
     String instrumentImage = '';
-    if (instrument == null) {
-      print('Received null value for instrument');
-      return Icons.help_outline;
-    } else if (instrument == 'Guitar') {
-      return MdiIcons.guitarElectric;
+    if (instrument == 'Guitar') {
+      instrumentImage = 'assets/guitar.png';
     } else if (instrument == 'Bass') {
-      return MdiIcons.microphone;
+      instrumentImage = 'assets/bass.png';
     } else if (instrument == 'Drums') {
-      return MdiIcons.microphone;
+      instrumentImage = 'assets/drums.png';
     } else if (instrument == 'Keyboard') {
-      return MdiIcons.microphone;
-    } else if (instrument == 'Vocals') {
-      return MdiIcons.microphone;
-    } else {
-      return MdiIcons.helpCircleOutline;
+      instrumentImage = 'assets/keyboard.png';
+    } else if (instrument == 'Vocal') {
+      instrumentImage = 'assets/vocals.png';
     }
+    return instrumentImage;
   }
+
 
   void _deleteMember(int id) async {
     final bool confirmed = await showDialog(
@@ -216,10 +213,10 @@ class _band_detailsState extends State<band_details> {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(
-                                    instrumentIcon(
-                                        _members[index]['instrument_name']),
-                                    size: 20,
+                                  Image.asset(
+                                    imageIcon(_members[index]['instrument_name']),
+                                    height: 50,
+                                    width: 50,
                                   ),
                                   SizedBox(width: 10),
                                   Text(
@@ -227,10 +224,11 @@ class _band_detailsState extends State<band_details> {
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
-                                        color: Colors.black),
+                                        color: Colors.black
+                                    ),
                                   ),
                                 ],
-                              ),
+                              )
                             ),
                             Padding(
                                 padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
