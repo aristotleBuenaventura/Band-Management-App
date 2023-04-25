@@ -92,36 +92,6 @@ class _band_entryState extends State<band_entry> {
               ),
             ),
           ),
-              SizedBox(
-                height: 16.0,
-              ),
-              ElevatedButton(
-                onPressed: () {
-
-                },
-                style: ElevatedButton.styleFrom(
-                  primary:  Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                    horizontal: 24.0,
-                  ),
-                  child: Text(
-                    'Add Band Members',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 16.0,
-              ),
               const Spacer(),
               Padding(
                 padding: EdgeInsets.all(16.0),

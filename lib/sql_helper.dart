@@ -157,4 +157,22 @@ class SQLHelper {
       debugPrint('Something went wrong: $err');
     }
   }
+
+  static Future<void> deleteMember(int id) async {
+    final db = await SQLHelper.dbMembers();
+    try {
+      await db.delete('members', where: 'id = ?', whereArgs: [id]);
+    } catch (err) {
+      debugPrint('Something went wrong: $err');
+    }
+  }
+
+  static Future<void> deleteSong(int id) async {
+    final db = await SQLHelper.dbSongs();
+    try {
+      await db.delete('songs', where: 'id = ?', whereArgs: [id]);
+    } catch (err) {
+      debugPrint('Something went wrong: $err');
+    }
+  }
 }

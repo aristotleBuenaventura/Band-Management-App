@@ -22,7 +22,6 @@ class _band_detailsState extends State<band_details> {
     final members = await SQLHelper.getItemMembers(widget.id);
     final songs = await SQLHelper.getItemSongs(widget.id);
 
-
     setState(() {
       _bands = data;
       _members = members;
@@ -31,7 +30,6 @@ class _band_detailsState extends State<band_details> {
       print(_bands);
       print(_members);
       print(_songs);
-
     });
   }
 
@@ -59,7 +57,6 @@ class _band_detailsState extends State<band_details> {
     return genreImage;
   }
 
-
   IconData instrumentIcon(String? instrument) {
     String instrumentImage = '';
     if (instrument == null) {
@@ -80,6 +77,64 @@ class _band_detailsState extends State<band_details> {
     }
   }
 
+  void _deleteMember(int id) async {
+    final bool confirmed = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete a Member'),
+          content: const Text('Are you sure you want to delete this Member?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true) {
+      await SQLHelper.deleteMember(id);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Successfully deleted a band')));
+      _refreshBands();
+    }
+  }
+
+  void _deleteSong(int id) async {
+    final bool confirmed = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete a Song'),
+          content: const Text('Are you sure you want to delete this Song?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true) {
+      await SQLHelper.deleteSong(id);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Successfully deleted a band')));
+      _refreshBands();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +149,7 @@ class _band_detailsState extends State<band_details> {
         children: [
           Container(
             width: double.infinity,
-            height: 250,
+            height: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
@@ -116,95 +171,95 @@ class _band_detailsState extends State<band_details> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
             child: Container(
                 width:
                     double.infinity, // Set the desired width of the container
                 height: 50, // Set the desired height of the container
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                   // You can adjust the radius to change the pill shape
+                  // You can adjust the radius to change the pill shape
                 ),
                 child: Container(
                   width: 200,
                   height: 50,
-                  child: const Center(
+                  child: Center(
                     // Wrap the Text widget in a Center widget
                     child: Text(
-                      'Members',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      'Members of ${_bands.isNotEmpty ? _bands[0]['band_name'] : ''}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   ),
-                )
-            ),
+                )),
           ),
           Container(
-            height: 100,
+            height: 150,
             child: Expanded(
-            child: ListView.builder(
-
-              itemCount: _members.length,
-              itemBuilder: (context, index) => Card(
-                  color: Colors.white,
-                  margin: const EdgeInsets.all(15),
-                  child: ElevatedButton(
-                    style:
-                    ElevatedButton.styleFrom(foregroundColor: Colors.black, backgroundColor: Colors.white,),
-                    child: ListTile(
-                      subtitle: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  instrumentIcon(_members[index]['Instrument']),
-                                  size: 20,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  _members[index]['member_name'],
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      color: Colors.black
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
+              child: ListView.builder(
+                itemCount: _members.length,
+                itemBuilder: (context, index) => Card(
+                    color: Colors.white,
+                    margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
+                      ),
+                      child: ListTile(
+                        subtitle: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
                               padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Column(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-
-                                    },
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.black),
-                                    ),
-                                    child: const Text(
-                                        'Delete'), // the text displayed on the button
+                                  Icon(
+                                    instrumentIcon(
+                                        _members[index]['instrument_name']),
+                                    size: 20,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    _members[index]['member_name'],
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.black),
                                   ),
                                 ],
-                              )),
-                        ],
+                              ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        _deleteMember(_members[index]['id'],);
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.black),
+                                      ),
+                                      child: const Text(
+                                          'Delete'), // the text displayed on the button
+                                    ),
+                                  ],
+                                )),
+                          ],
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                    },
-                  )),
+                      onPressed: () {},
+                    )),
+              ),
             ),
-          ),),
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: ElevatedButton(
@@ -212,10 +267,12 @@ class _band_detailsState extends State<band_details> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => band_member(id: _bands[0]['id'])));
+                        builder: (context) =>
+                            band_member(id: _bands[0]['id'])));
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.black, // Set text color to white
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.black, // Set text color to white
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -233,12 +290,12 @@ class _band_detailsState extends State<band_details> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
             child: Container(
                 width:
-                double.infinity, // Set the desired width of the container
+                    double.infinity, // Set the desired width of the container
                 height: 50, // Set the desired height of the container
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   // You can adjust the radius to change the pill shape
                 ),
@@ -249,41 +306,76 @@ class _band_detailsState extends State<band_details> {
                     // Wrap the Text widget in a Center widget
                     child: Text(
                       'Songs',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   ),
-                )
-            ),
+                )),
           ),
           Container(
-            height: 100,
+            height: 150,
             child: Expanded(
               child: ListView.builder(
                 itemCount: _songs.length,
                 itemBuilder: (context, index) => Card(
                     color: Colors.white,
-                    margin: const EdgeInsets.all(15),
+                    margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
                     child: ElevatedButton(
-                      style:
-                      ElevatedButton.styleFrom(foregroundColor: Colors.black, backgroundColor: Colors.white,),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
+                      ),
                       child: ListTile(
                         subtitle: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
                               padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    _songs[index]['song_name'],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: Colors.black),
-                                  ),
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Song Name:',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.black),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            '${_songs[index]['song_name']}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                                color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(width: 10),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Release Year:',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.black),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            '${_songs[index]['release_year']}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                                color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -291,16 +383,16 @@ class _band_detailsState extends State<band_details> {
                                 padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                 child: Column(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     ElevatedButton(
                                       onPressed: () {
-
+                                        _deleteSong(_songs[index]['id'],);
                                       },
                                       style: ButtonStyle(
                                         backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.black),
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.black),
                                       ),
                                       child: const Text(
                                           'Delete'), // the text displayed on the button
@@ -310,11 +402,11 @@ class _band_detailsState extends State<band_details> {
                           ],
                         ),
                       ),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     )),
               ),
-            ),),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: ElevatedButton(
@@ -325,7 +417,8 @@ class _band_detailsState extends State<band_details> {
                         builder: (context) => band_song(id: _bands[0]['id'])));
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.black, // Set text color to white
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.black, // Set text color to white
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -342,39 +435,6 @@ class _band_detailsState extends State<band_details> {
               ),
             ),
           ),
-          const Spacer(),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // _showForm(null);
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => band_entry()));
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 4,
-                foregroundColor: Colors.black, backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const SizedBox(
-                width: 200, // Set the desired width here
-                child: SizedBox(
-                  height: 50,
-                  child: Center(
-                    child: Text(
-                      "Save",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
-
         ],
       ),
     );

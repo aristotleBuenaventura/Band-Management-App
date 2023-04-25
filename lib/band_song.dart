@@ -26,7 +26,7 @@ class _band_songState extends State<band_song> {
       backgroundColor: Colors.white12,
       appBar: AppBar(
         title: const Center(
-          child: Text("Band Member Entry"),
+          child: Text("Band Song Entry"),
         ),
         backgroundColor: Colors.black,
       ),
@@ -44,7 +44,7 @@ class _band_songState extends State<band_song> {
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: TextField(
                     decoration: const InputDecoration(
-                      labelText: 'Enter the Band Member name',
+                      labelText: 'Enter the Song name',
                     ),
                     onChanged: (value) {
                       setState(() {
@@ -66,7 +66,7 @@ class _band_songState extends State<band_song> {
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: TextField(
                     decoration: const InputDecoration(
-                      labelText: 'Enter the Band Member name',
+                      labelText: 'Enter the Release Year',
                     ),
                     onChanged: (value) {
                       setState(() {
