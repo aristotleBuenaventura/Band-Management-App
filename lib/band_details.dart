@@ -334,22 +334,25 @@ class _band_detailsState extends State<band_details> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
                                           const Text(
                                             'Song Name:',
                                             style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.black),
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                           SizedBox(width: 10),
                                           Text(
                                             '${_songs[index]['song_name']}',
                                             style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20,
-                                                color: Colors.black),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -357,18 +360,20 @@ class _band_detailsState extends State<band_details> {
                                       Row(
                                         children: [
                                           const Text(
-                                            'Release Year:',
+                                            'Release year:',
                                             style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.black),
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                           SizedBox(width: 10),
                                           Text(
                                             '${_songs[index]['release_year']}',
                                             style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20,
-                                                color: Colors.black),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                         ],
                                       ),
